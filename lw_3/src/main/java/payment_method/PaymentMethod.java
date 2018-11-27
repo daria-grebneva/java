@@ -2,6 +2,8 @@ package payment_method;
 
 public class PaymentMethod implements IPaymentMethod {
 
+    private Method _method;
+
     public PaymentMethod(Method method) {
         this._method = method;
     }
@@ -10,5 +12,4 @@ public class PaymentMethod implements IPaymentMethod {
         return this._method;
     }
 
-    private Method _method;
 }

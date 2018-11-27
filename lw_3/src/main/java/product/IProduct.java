@@ -7,5 +7,6 @@ public interface IProduct {
     int getProductId();
     String getProductName();
     BigDecimal getProductPrice();
-    boolean IsAdultProduct();
+    boolean isAdultProduct();
+    public IProductsReserve.ProductMeasure getProductMeasure();
 }

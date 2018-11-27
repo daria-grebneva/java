@@ -9,4 +9,9 @@ public interface IPaymentMethod {
     }
 
     Method getPaymentMethod();
+
+    static Method getPaymentMethodByCode(int code)
+    {
+        return Method.values()[code];
+    }
 }

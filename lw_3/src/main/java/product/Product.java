@@ -11,13 +11,15 @@ public class Product implements IProduct {
     private Discount _discount;
     private BigDecimal _price;
     private boolean _isAdultProduct;
+    private IProductsReserve.ProductMeasure _measure;
 
-    public Product(int productId, String productName, Discount discount, BigDecimal price, boolean isAdultProduct) {
+    public Product(int productId, String productName, Discount discount, BigDecimal price, boolean isAdultProduct, IProductsReserve.ProductMeasure measure) {
         this._productId = productId;
         this._productName = productName;
         this._discount = discount;
         this._price = price;
         this._isAdultProduct = isAdultProduct;
+        this._measure = measure;
     }
 
     public int getProductId() {
@@ -32,7 +34,9 @@ public class Product implements IProduct {
         return this._price;
     }
 
-    public boolean IsAdultProduct() {
+    public boolean isAdultProduct() {
         return this._isAdultProduct;
     }
+
+    public IProductsReserve.ProductMeasure getProductMeasure() { return this._measure; }
 }
