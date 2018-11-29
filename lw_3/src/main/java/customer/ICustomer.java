@@ -1,7 +1,7 @@
 package customer;
 
 import basket.Basket;
-import payment_method.PaymentMethod;
+import payment_method.IPaymentMethod;
 
 import java.math.BigDecimal;
 
@@ -21,7 +21,7 @@ public interface ICustomer {
     int getBonuses();
     void setBonuses(int bonuses);
 
-    PaymentMethod.Method getPaymentMethod();
+    IPaymentMethod.Method getPaymentMethod();
 
     Basket getBasket();
     void addProductToBasket(int productId, int count);

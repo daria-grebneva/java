@@ -77,6 +77,7 @@ public class Supermarket {
         int code = Randomizer.getRandomInt(0, ICustomer.CustomerType.values().length);
         ICustomer.CustomerType customerType = ICustomer.getCustomTypeByCode(code);
         IPaymentMethod.Method method = IPaymentMethod.getPaymentMethodByCode(code);
+        System.out.println("LALALA" + method);
         int id =  Randomizer.getRandomInt(1, 100000000);
         int cash = Randomizer.getRandomInt(50, 500);
         int cardCash = Randomizer.getRandomInt(50, 500);

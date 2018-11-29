@@ -20,7 +20,7 @@ public class Customer implements ICustomer {
         this._id = id;
         this._type = type;
         this._basket = new Basket();
-        this._paymentMethod = getPaymentMethod();
+        this._paymentMethod = paymentMethod;
         this._cash = cash;
         this._cardCash = cardCash;
         this._bonuses = bonuses;
@@ -52,9 +52,9 @@ public class Customer implements ICustomer {
         this._bonuses += bonuses;
     }
 
-    public PaymentMethod.Method getPaymentMethod()
+    public IPaymentMethod.Method getPaymentMethod()
     {
-        return _paymentMethod;
+        return this._paymentMethod;
     }
 
     public Basket getBasket() {

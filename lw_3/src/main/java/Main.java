@@ -18,7 +18,7 @@ public class Main {
                     supermarket.showReport();
                 }
             }
-        }, 1000, 1000);
+        }, 1000, 10);
 
         supermarket.closeMarket();
         supermarket.showReport();

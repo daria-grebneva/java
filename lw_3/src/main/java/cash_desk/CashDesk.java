@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class CashDesk implements ICashDesk{
+public class CashDesk implements ICashDesk {
 
     private List<Integer> customersQueeIds = new ArrayList<>();
 //    private Bill bill;
@@ -23,8 +23,8 @@ public class CashDesk implements ICashDesk{
 
         List<Integer> result = new ArrayList<>();
 
-        for(int currentCustomerId : this.customersQueeIds) {
-            if(currentCustomerId != customerId) {
+        for (int currentCustomerId : this.customersQueeIds) {
+            if (currentCustomerId != customerId) {
                 result.add(currentCustomerId);
             }
         }
@@ -36,7 +36,7 @@ public class CashDesk implements ICashDesk{
         if (customersQueeIds.size() > 0) {
             int targetCustomerId = customersQueeIds.get(customersQueeIds.size() - 1);
             List<Product> productList = productStock.GetProductList();
-            for(Customer customer : customers) {
+            for (Customer customer : customers) {
                 if (customer.getId() == targetCustomerId) {
                     Basket clientBasket = customer.getBasket();
 
@@ -53,7 +53,7 @@ public class CashDesk implements ICashDesk{
                                     }
                                     BigDecimal calculateTotal = stockProduct.getProductPrice().multiply(new BigDecimal(productCount));
                                     totalPrice[0] = calculateTotal.plus();
-                                    System.out.println("[+] calculate "  + stockProduct.toString() + " (" + productCount + ") "
+                                    System.out.println("[+] calculate " + stockProduct.getProductName() + " (" + productCount + ") "
                                             + stockProduct.getProductMeasure() + ", price: " + stockProduct.getProductPrice());
                                 }
                             }
@@ -70,14 +70,13 @@ public class CashDesk implements ICashDesk{
                         }
 
                         if (customer.getCash().compareTo(totalPrice[0]) >= 0) {
-                            // todo: payment method
+                            System.out.println("-> Customer method: " + customer.getPaymentMethod());
                             System.out.println("-> Customer use cash: " + customer.getCash());
                             customer.updateCash(customer.getCash().subtract(totalPrice[0]));
                             System.out.println("[+] payment complete");
                             System.out.println("-> Customer remain cash " + customer.getCash());
                             report.addSoldProducts(clientBasket.getBasketContent());
-                        }
-                        else if (customer.getCash().compareTo(totalPrice[0]) < 0
+                        } else if (customer.getCash().compareTo(totalPrice[0]) < 0
                                 && (customer.isRetired() && (totalPrice[0].compareTo(new BigDecimal(customer.getBonuses())) < 0))) {
                             System.out.println("-> Customer use bonuses: " + customer.getBonuses());
                             BigDecimal bdBonuses = new BigDecimal(customer.getBonuses()).subtract(totalPrice[0]);
@@ -85,8 +84,7 @@ public class CashDesk implements ICashDesk{
                             System.out.println("[+] payment complete");
                             System.out.println("-> Customer remain bonuses " + customer.getBonuses());
                             report.addSoldProducts(clientBasket.getBasketContent());
-                        }
-                        else {
+                        } else {
                             System.out.println("[!] Insufficient funds");
                             System.out.println("-> Products from basket return to stock");
                             clientBasket.getBasketContent().forEach(productStock::returnProduct);
