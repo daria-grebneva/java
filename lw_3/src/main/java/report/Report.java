@@ -21,7 +21,7 @@ public class Report implements IReport {
     }
 
     public String getSoldProductReport(ProductReserve stock) {
-        String[] outputReportData = {"Sold products:\n"};
+        String[] outputReportData = {" Sold products:\n"};
         int[] totalCount = {0};
         this.getSoldProducts().forEach((id, quantity) -> {
             Product product = stock.GetProductById(id);

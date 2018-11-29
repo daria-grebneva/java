@@ -3,12 +3,12 @@ package supermarket;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SupermarketAction {
-    public static int EVENT_CUSTOMER_CAME_IN = 1;
-    public static int EVENT_CUSTOMER_CAME_OUT = 2;
-    public static int EVENT_CUSTOMER_PUT_IN_BASKET = 3;
-    public static int EVENT_CUSTOMER_JOIN_QUEUE = 4;
-    public static int EVENT_CUSTOMER_LEFT_QUEUE = 5;
-    public static int EVENT_CUSTOMER_SERVE_NEXT = 6;
+    public static final int EVENT_CUSTOMER_CAME_IN = 1;
+    public static final int EVENT_CUSTOMER_CAME_OUT = 2;
+    public static final int EVENT_CUSTOMER_PUT_IN_BASKET = 3;
+    public static final int EVENT_CUSTOMER_JOIN_QUEUE = 4;
+    public static final int EVENT_CUSTOMER_LEFT_QUEUE = 5;
+    public static final int EVENT_CUSTOMER_SERVE_NEXT = 6;
 
     private int[] eventPriorityRange = {
             EVENT_CUSTOMER_CAME_IN,
