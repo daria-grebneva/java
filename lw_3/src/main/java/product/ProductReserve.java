@@ -8,13 +8,12 @@ import utils.Randomizer;
 
 public class ProductReserve implements IProductsReserve {
 
-    private final Map<Integer, Integer> productStore = new HashMap<>();
-    private final List<Product> productList = new ArrayList<>();
+    private Map<Integer, Integer> productStore = new HashMap<>();
+    private List<Product> productList = new ArrayList<>();
 
-    public final void GenerateRandomProductStore() {
+    public void GenerateRandomProductStore() {
 
         FillProductList();
-
         int productsCount = productList.size();
         int randomCount;
 
@@ -24,23 +23,22 @@ public class ProductReserve implements IProductsReserve {
             productStore.put(newProduct.getProductId(), randomCount);
 
             System.out.println(" Add product # " + newProduct.getProductId());
-            System.out.println(" Details: " + newProduct.getProductName() + ", price: " + newProduct.getProductPrice());
-            System.out.println(" Total count: " + randomCount);
+            System.out.println(" " + newProduct.getProductName() + " " + newProduct.getProductPrice() + " x " + randomCount);
             System.out.println(" ---------------");
         }
     }
 
-    public final List<Product> GetProductList() {
+    public List<Product> GetProductList() {
         return productList;
     }
 
-    public final void returnProduct(int productId, int count) {
+    public void returnProduct(int productId, int count) {
         if (this.productStore.containsKey(productId)) {
             this.productStore.put(productId, this.productStore.get(productId) + count);
         }
     }
 
-    public final boolean deductProduct(int productId, int count) {
+    public boolean removeProduct(int productId, int count) {
         if (this.productStore.containsKey(productId)) {
             int storeCount = this.productStore.get(productId);
             if (storeCount > 0 && storeCount >= count) {
@@ -51,7 +49,7 @@ public class ProductReserve implements IProductsReserve {
         return false;
     }
 
-    public final Product GetProductById(int productId) {
+    public Product GetProductById(int productId) {
         return productList.get(productId);
     }
 
@@ -59,8 +57,8 @@ public class ProductReserve implements IProductsReserve {
 
         productList.add(new Product(
                 1,
-                "Bread",
-                new Discount(0),
+                "Milk",
+                new Discount(15),
                 new BigDecimal(15),
                 false,
                 ProductMeasure.PIECES)
@@ -68,8 +66,8 @@ public class ProductReserve implements IProductsReserve {
 
         productList.add(new Product(
                 2,
-                "Banan",
-                new Discount(10),
+                "Apple",
+                new Discount(0),
                 new BigDecimal(25),
                 false,
                 ProductMeasure.KG)
@@ -77,7 +75,7 @@ public class ProductReserve implements IProductsReserve {
 
         productList.add(new Product(
                 3,
-                "Beer",
+                "Vodka",
                 new Discount(5),
                 new BigDecimal(30),
                 true,
@@ -86,7 +84,7 @@ public class ProductReserve implements IProductsReserve {
 
         productList.add(new Product(
                 4,
-                "Cigaro",
+                "Cigarettes",
                 new Discount(0),
                 new BigDecimal(50),
                 true,
@@ -95,8 +93,17 @@ public class ProductReserve implements IProductsReserve {
 
         productList.add(new Product(
                 5,
-                "Chocolate",
+                "Sausage",
                 new Discount(15),
+                new BigDecimal(40),
+                false,
+                ProductMeasure.PIECES)
+        );
+
+        productList.add(new Product(
+                6,
+                "Salad",
+                new Discount(30),
                 new BigDecimal(40),
                 false,
                 ProductMeasure.PIECES)

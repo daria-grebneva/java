@@ -7,9 +7,10 @@ public class Main {
 
     public static void main(String[] args) {
         Supermarket supermarket = new Supermarket();
-        final Timer timer = new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             int seconds = 0;
+
             @Override
             public void run() {
                 supermarket.runMarketScenario();
@@ -21,6 +22,5 @@ public class Main {
         }, 1000, 10);
 
         supermarket.closeMarket();
-        supermarket.showReport();
     }
 }

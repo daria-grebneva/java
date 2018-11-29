@@ -14,9 +14,9 @@ public class Customer implements ICustomer {
     private IPaymentMethod.Method _paymentMethod;
     private BigDecimal _cash;
     private BigDecimal _cardCash;
-    private int _bonuses;
+    private BigDecimal _bonuses;
 
-    public Customer(Integer id, CustomerType type, IPaymentMethod.Method paymentMethod, BigDecimal cash, BigDecimal cardCash, int bonuses){
+    public Customer(Integer id, CustomerType type, IPaymentMethod.Method paymentMethod, BigDecimal cash, BigDecimal cardCash, BigDecimal bonuses){
         this._id = id;
         this._type = type;
         this._basket = new Basket();
@@ -44,12 +44,12 @@ public class Customer implements ICustomer {
         return this._cardCash;
     }
 
-    public int getBonuses() {
+    public BigDecimal getBonuses() {
         return this._bonuses;
     }
 
-    public void setBonuses(int bonuses) {
-        this._bonuses += bonuses;
+    public void setBonuses(BigDecimal bonuses) {
+        (this._bonuses).add(bonuses);
     }
 
     public IPaymentMethod.Method getPaymentMethod()
@@ -93,7 +93,7 @@ public class Customer implements ICustomer {
         this._cardCash = value;
     }
 
-    public void updateBonuses(int value) {
+    public void updateBonuses(BigDecimal value) {
         this._bonuses = value;
     }
 

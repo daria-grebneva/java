@@ -18,8 +18,8 @@ public interface ICustomer {
 
     BigDecimal getCash();
     BigDecimal getCardCash();
-    int getBonuses();
-    void setBonuses(int bonuses);
+    BigDecimal getBonuses();
+    void setBonuses(BigDecimal bonuses);
 
     IPaymentMethod.Method getPaymentMethod();
 
@@ -34,7 +34,7 @@ public interface ICustomer {
 
     void updateCash(BigDecimal value);
     void updateCardCash(BigDecimal value);
-    void updateBonuses(int value);
+    void updateBonuses(BigDecimal value);
 
     static CustomerType getCustomTypeByCode(int code)
     {

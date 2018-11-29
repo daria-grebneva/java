@@ -1,12 +1,15 @@
 package report;
 
+import product.ProductReserve;
+
 import java.util.Map;
 
 public interface IReport {
+    void addSoldProducts(Map<Integer, Integer> soldProducts);
 
-    public void addSoldProducts(Map<Integer, Integer> soldProducts);
-    public Map<Integer, Integer> getSoldProducts();
-    public String getSoldProductReport();
-    public void printReport();
+    Map<Integer, Integer> getSoldProducts();
 
+    String getSoldProductReport(ProductReserve stock);
+
+    void printReport(ProductReserve stock);
 }
