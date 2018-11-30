@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 
 public class CashDesk implements ICashDesk {
 
-    private List<Integer> queue = new ArrayList<>();
-
     public void addCustomerToQueue(int id) {
         queue.add(id);
     }
@@ -57,6 +55,7 @@ public class CashDesk implements ICashDesk {
         }
     }
 
+    private List<Integer> queue = new ArrayList<>();
 
     private Boolean isNotForChild(Customer customer, Product stockProduct) {
         return (!customer.isAdult() && stockProduct.isAdultProduct());

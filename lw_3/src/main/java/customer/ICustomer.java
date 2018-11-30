@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public interface ICustomer {
 
-    public enum CustomerType {
+    enum CustomerType {
         Child,
         Adult,
         Retired

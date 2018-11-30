@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class Customer implements ICustomer {
 
-    private Integer _id;
+    private int _id;
     private CustomerType _type;
     private Basket _basket;
     private IPaymentMethod.Method _paymentMethod;
@@ -16,7 +16,7 @@ public class Customer implements ICustomer {
     private BigDecimal _cardCash;
     private BigDecimal _bonuses;
 
-    public Customer(Integer id, CustomerType type, IPaymentMethod.Method paymentMethod, BigDecimal cash, BigDecimal cardCash, BigDecimal bonuses){
+    public Customer(int id, CustomerType type, IPaymentMethod.Method paymentMethod, BigDecimal cash, BigDecimal cardCash, BigDecimal bonuses){
         this._id = id;
         this._type = type;
         this._basket = new Basket();
