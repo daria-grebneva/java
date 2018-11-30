@@ -8,8 +8,6 @@ public interface IBasket {
     void removeProduct(int productId);
     void clearBasket();
     int getBasketSize();
-    //TODO:: поменять map на другую структуру данных
     Map<Integer, Integer> getBasketContent();
-    int[] arrToInt();
 
 }
