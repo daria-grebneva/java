@@ -28,9 +28,9 @@ public class Supermarket {
         return workingTimeMinutes;
     }
 
-    private static int workingTimeMinutes = 1;
+    private final static int workingTimeMinutes = 1;
 
-    private SupermarketAction marketEvent = new SupermarketAction();
+    private SupermarketAction action = new SupermarketAction();
 
     private boolean isOpen;
     private List<Customer> customers = new ArrayList<>();
@@ -46,23 +46,23 @@ public class Supermarket {
             configureMarket();
         }
 
-        switch (marketEvent.getNextRandomEvent()) {
-            case SupermarketAction.EVENT_CUSTOMER_CAME_IN:
+        switch (action.getNextRandomEvent()) {
+            case SupermarketAction.ACTION_CUSTOMER_CAME_IN:
                 addRandomCustomer();
                 break;
-            case SupermarketAction.EVENT_CUSTOMER_CAME_OUT:
+            case SupermarketAction.ACTION_CUSTOMER_CAME_OUT:
                 removeRandomCustomer();
                 break;
-            case SupermarketAction.EVENT_CUSTOMER_PUT_IN_BASKET:
+            case SupermarketAction.ACTION_CUSTOMER_PUT_IN_BASKET:
                 fillRandomlyProducts();
                 break;
-            case SupermarketAction.EVENT_CUSTOMER_JOIN_QUEUE:
+            case SupermarketAction.ACTION_CUSTOMER_JOIN_QUEUE:
                 joinRandomCustomer();
                 break;
-            case SupermarketAction.EVENT_CUSTOMER_LEFT_QUEUE:
+            case SupermarketAction.ACTION_CUSTOMER_LEFT_QUEUE:
                 leftRandomCustomerFromQueue();
                 break;
-            case SupermarketAction.EVENT_CUSTOMER_SERVE_NEXT:
+            case SupermarketAction.ACTION_CUSTOMER_SERVE_NEXT:
                 serveNextCustomer();
                 break;
         }

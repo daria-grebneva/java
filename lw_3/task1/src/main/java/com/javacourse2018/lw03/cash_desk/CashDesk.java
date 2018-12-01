@@ -119,7 +119,7 @@ public class CashDesk implements ICashDesk {
                         continue;
                     }
 
-                    totalCost[0] = increaseTotalCost(product, quantity);
+                    totalCost[0] = totalCost[0].add(increaseTotalCost(product, quantity));
                 }
             }
         });
