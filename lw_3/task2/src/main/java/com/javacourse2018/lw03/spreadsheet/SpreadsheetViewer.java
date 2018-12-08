@@ -6,6 +6,7 @@ import java.util.*;
 public class SpreadsheetViewer {
 
     private TreeMap<Character, TreeMap<Integer, String>> table;
+    private boolean isDivisionByZero = false;
 
     SpreadsheetViewer(TreeMap<Character, TreeMap<Integer, String>> table) {
         this.table = table;
@@ -50,14 +51,27 @@ public class SpreadsheetViewer {
                     String format = "%" + (15 * counter) + "s";
                     counter = 0;
                     if (value.split(" ")[0].equals("formula")) {
+                        this.isDivisionByZero = false;
                         Double result = makeCalculation(this.getFormula(value));
-                        if (Double.isNaN(result)) {
-                            System.out.print("");
-                        } else {
+                        if (this.isDivisionByZero) {
+                            System.out.printf(format, "");
+                        }
+                        else if (Double.isNaN(result)){
+                            String str = concatinate(this.getFormula(value));
+                            if (str.isEmpty()) {
+                                System.out.printf(format, "");
+                            }
+                            else {
+                                System.out.printf(format, str);
+                            }
+                        }
+                        else {
+
                             String calcResult = new DecimalFormat("#0.00")
                                     .format(result);
                             System.out.printf(format, calcResult);
                         }
+
                         continue;
                     }
                     System.out.printf(format, value);
@@ -67,12 +81,57 @@ public class SpreadsheetViewer {
         }
     }
 
-    public void checkDivisionByZero(String value) throws Exception {
+    void checkDivisionByZero(String value) throws Exception {
         value = "formula " + value;
+        this.isDivisionByZero = false;
         Double result = makeCalculation(this.getFormula(value));
-        if (Double.isNaN(result)) {
-            throw new Exception("Division by zero");
+        if (this.isDivisionByZero) {
+            throw new Exception("[ERR] Division by zero");
         }
+        else if (Double.isNaN(result)){
+            String str = concatinate(this.getFormula(value));
+            if (str.isEmpty()) {
+                throw new Exception("[ERR] Something wrong with operation");
+            }
+        }
+    }
+
+    private String concatinate(String formula) {
+        String[] prefixStrArray = formula.split(" ");
+        Stack<String> stack = new Stack<>();
+
+        Map<String, Concatination> operations = new HashMap<>();
+        operations.put("+", (a, b) -> a + b);
+        for (int i = prefixStrArray.length - 1; i > -1; i--) {
+            String prefixStr = prefixStrArray[i];
+            if (prefixStr.equals("")) {
+                continue;
+            }
+            if (operations.containsKey(prefixStr)) {
+                String a = stack.pop();
+                String b = stack.pop();
+                stack.push(operations.get(prefixStr).getStringResult(a, b));
+            } else {
+                stack.push(getStringValueVariable(prefixStr));
+            }
+        }
+        return stack.pop();
+    }
+
+
+    private String getStringValueVariable(String variable) {
+        String value = "";
+        if (table.containsKey(variable.charAt(0))) {
+            TreeMap<Integer, String> col = table.get(variable.charAt(0));
+            if (col.containsKey(Integer.parseInt("" + variable.charAt(1)))) {
+                String str = col.get(Integer.parseInt("" + variable.charAt(1)));
+                if (str.split(" ")[0].equals("formula")) {
+                    return concatinate(getFormula(str));
+                }
+                value = value + str;
+            }
+        }
+        return value;
     }
 
     private Double getValueVariable(String variable) {
@@ -112,7 +171,7 @@ public class SpreadsheetViewer {
                 Double a = stack.pop();
                 Double b = stack.pop();
                 if (prefixStr.equals("/") && (b == 0)) {
-                    //throw new Exception("[ERR] wrong formula");
+                    this.isDivisionByZero = true;
                     stack.push(Double.NaN);
                 }
                 else {
