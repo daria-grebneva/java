@@ -81,7 +81,7 @@ public class SpreadsheetViewer {
         return value;
     }
 
-    private double makeCalculation(String formula) {
+    double makeCalculation(String formula) {
         String[] prefixStrArray = formula.split(" ");
         Stack<Double> stack = new Stack<Double>();
 
@@ -98,8 +98,13 @@ public class SpreadsheetViewer {
             if (operations.containsKey(prefixStr)) {
                 Double a = stack.pop();
                 Double b = stack.pop();
-                stack.push((prefixStr.equals("/") && (b == 0)) ?
-                        Double.NaN : operations.get(prefixStr).getResult(a, b));
+                if (prefixStr.equals("/") && (b == 0)) {
+                    //throw new Exception("[ERR] wrong formula");
+                    stack.push(Double.NaN);
+                }
+                else {
+                    stack.push(operations.get(prefixStr).getResult(a, b));
+                }
             } else {
                 if (isDouble(prefixStr)) {
                     stack.push(Double.parseDouble(prefixStr));

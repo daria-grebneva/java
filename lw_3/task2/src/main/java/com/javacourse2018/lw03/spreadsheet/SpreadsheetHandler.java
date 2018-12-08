@@ -12,7 +12,7 @@ public class SpreadsheetHandler {
         this.spreadsheet = spreadsheet;
         commands = new HashMap<>();
         commands.put("set", this::setValue);
-        commands.put("setformula", this::setFormula);
+        commands.put("setformula", this::checkCondition);
         commands.put("display", input -> this.spreadsheet.display());
 
         this.start();
@@ -58,7 +58,7 @@ public class SpreadsheetHandler {
         System.out.println("OK");
     }
 
-    private void setFormula(String[] input) throws Exception {
+    private void checkCondition(String[] input) throws Exception {
         if (input.length == 1) {
             throw new Exception("[ERR] no identifier");
         }
@@ -89,6 +89,8 @@ public class SpreadsheetHandler {
         String formula = input.get(1).replaceAll("\\(|\\)|\\[|\\]", " ");
         String[] prefixes = formula.split(" ");
         Stack<String> stack = new Stack<String>();
+        boolean division = false;
+        boolean zero = false;
         for (int i = prefixes.length - 1; i > -1; i--) {
             String prefix = prefixes[i];
             if (prefix.equals("")) {
@@ -96,6 +98,9 @@ public class SpreadsheetHandler {
             }
             if (prefix.equals("+") || prefix.equals("/") || prefix.equals("*")
                     || prefix.equals("-")) {
+                if (prefix.equals("/")) {
+                    division = true;
+                }
                 if (stack.size() < 2) {
                     return false;
                 }
@@ -107,6 +112,8 @@ public class SpreadsheetHandler {
                 if (!isDouble(prefix)) {
                     PairStruct cell = getVariableInfo(prefix);
                     if (spreadsheet.isFormula(cell)) {
+                        //TODO:: проверить деление на ноль
+                       // spreadsheet.makeCalculaton(spreadsheet.getFormula(cell));
                         List<String> items = new ArrayList<String>();
                         items.add(input.get(0));
                         items.add(spreadsheet.getFormula(cell));
@@ -122,6 +129,10 @@ public class SpreadsheetHandler {
             return false;
         }
 
+        if (!checkCalculation(formula))
+        {
+            throw new Exception("[ERR] delim na nol'");
+        }
         input.set(1, formula);
         return true;
     }
@@ -165,4 +176,44 @@ public class SpreadsheetHandler {
         pair.number = number;
         return pair;
     }
+
+    private boolean checkCalculation(String formula) {
+        String[] prefixStrArray = formula.split(" ");
+        Stack<Double> stack = new Stack<Double>();
+
+        Map<String, Calculation> operations = new HashMap<>();
+        operations.put("+", (a, b) -> a + b);
+        operations.put("-", (a, b) -> a - b);
+        operations.put("*", (a, b) -> a * b);
+        operations.put("/", (a, b) -> a / b);
+        for (int i = prefixStrArray.length - 1; i > -1; i--) {
+            String prefixStr = prefixStrArray[i];
+            if (prefixStr.equals("")) {
+                continue;
+            }
+            if (operations.containsKey(prefixStr)) {
+                Double a = stack.pop();
+                Double b = stack.pop();
+                if (prefixStr.equals("/") && (b == 0)) {
+                   // throw new Exception("[ERR] wrong formula");
+                    //stack.push(Double.NaN);
+                    return false;
+                }
+                else {
+                    return true;
+                    //stack.push(operations.get(prefixStr).getResult(a, b));
+                }
+            } else {
+                if (isDouble(prefixStr)) {
+                    //stack.push(Double.parseDouble(prefixStr));
+                    continue;
+                }
+               // stack.push(getValueVariable(prefixStr));
+            }
+        }
+
+        return true;
+        //return stack.pop();
+    }
+
 }

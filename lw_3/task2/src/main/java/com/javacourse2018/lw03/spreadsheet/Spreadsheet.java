@@ -36,7 +36,9 @@ public class Spreadsheet {
         boolean result = false;
         if (table.containsKey(cell.symbol)) {
             if (table.get(cell.symbol).containsKey(cell.number)) {
+                //System.out.print(cell.symbol + cell.number + " ");
                 String[] input = table.get(cell.symbol).get(cell.number).split(" ");
+                //System.out.println(input[0]);
                 result = input[0].equals("formula");
             }
         }
@@ -57,4 +59,5 @@ public class Spreadsheet {
     void display() {
         viewer.display();
     }
+    void makeCalculaton(String formula) { viewer.makeCalculation(formula); }
 }
