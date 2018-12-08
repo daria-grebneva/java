@@ -50,15 +50,28 @@ public class SpreadsheetViewer {
                     String format = "%" + (15 * counter) + "s";
                     counter = 0;
                     if (value.split(" ")[0].equals("formula")) {
-                        String calcResult = new DecimalFormat("#0.00")
-                                .format(makeCalculation(this.getFormula(value)));
-                        System.out.printf(format, calcResult);
+                        Double result = makeCalculation(this.getFormula(value));
+                        if (Double.isNaN(result)) {
+                            System.out.print("");
+                        } else {
+                            String calcResult = new DecimalFormat("#0.00")
+                                    .format(result);
+                            System.out.printf(format, calcResult);
+                        }
                         continue;
                     }
                     System.out.printf(format, value);
                 }
             }
             ++counter;
+        }
+    }
+
+    public void checkDivisionByZero(String value) throws Exception {
+        value = "formula " + value;
+        Double result = makeCalculation(this.getFormula(value));
+        if (Double.isNaN(result)) {
+            throw new Exception("Division by zero");
         }
     }
 
