@@ -122,7 +122,9 @@ public class SpreadsheetHandler {
             return false;
         }
 
+        spreadsheet.checkDivisionByZero(formula);
         input.set(1, formula);
+
         return true;
     }
 
@@ -165,4 +167,6 @@ public class SpreadsheetHandler {
         pair.number = number;
         return pair;
     }
+
+
 }

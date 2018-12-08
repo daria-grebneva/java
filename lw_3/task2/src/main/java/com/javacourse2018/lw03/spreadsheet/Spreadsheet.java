@@ -54,7 +54,11 @@ public class Spreadsheet {
         return str;
     }
 
-    void display() {
+    void display() throws Exception {
         viewer.display();
+    }
+
+    void checkDivisionByZero(String value) throws Exception {
+        viewer.checkDivisionByZero(value);
     }
 }
